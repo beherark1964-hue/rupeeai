@@ -209,20 +209,6 @@ footer a{color:var(--primary);text-decoration:none;}
 .buy-sticky{display:none;position:fixed;bottom:0;left:0;width:100%;padding:10px 16px;background:rgba(10,22,40,0.96);backdrop-filter:blur(8px);border-top:1px solid var(--gold);z-index:9999;justify-content:center;}
 .buy-sticky .btn{max-width:320px;font-size:15px;padding:14px;margin:0 auto;}
 
-.form-section{max-width:540px;margin:0 auto 40px;padding:0 14px;width:100%;}
-.form-box{background:var(--navy-card);border:1px solid var(--border);border-radius:16px;padding:22px 18px;}
-.form-box h2{font-family:var(--font-syne);font-size:20px;font-weight:800;margin-bottom:4px;color:var(--gold);}
-.form-sub{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
-.form-group{margin-bottom:14px;}
-.form-group label{display:block;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
-.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--navy);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:var(--white);font-size:16px;font-family:var(--font-inter);transition:0.2s;outline:none;-webkit-appearance:none;}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
-.form-group select option{background:var(--navy);}
-.form-group textarea{resize:vertical;min-height:70px;}
-.btn-submit{width:100%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);font-weight:700;font-size:15px;padding:14px;border-radius:50px;border:none;cursor:pointer;font-family:var(--font-inter);transition:0.2s;box-shadow:0 4px 20px rgba(244,62,92,0.3);margin-top:4px;}
-.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(244,62,92,0.5);}
-.form-success{display:none;text-align:center;padding:18px;background:rgba(244,62,92,0.1);border:1px solid var(--primary);border-radius:12px;color:var(--primary);font-weight:600;font-size:14px;margin-top:14px;}
-
 @media (max-width:768px){
   .cta-group{gap:6px;}
   .btn{font-size:11px;padding:6px 10px;min-width:60px;}
@@ -408,34 +394,20 @@ footer a{color:var(--primary);text-decoration:none;}
   </div>
 </div>
 
-<!-- ✅ FORM WITH YOUR NEW ENDPOINT -->
+<!-- INQUIRY SECTION — NO FORM, JUST EMAIL -->
 <div class="form-section" id="inquiry">
-  <div class="form-box">
-    <h2>Institutional Inquiry</h2>
-    <p class="form-sub">For startups, funds, and institutional buyers. Serious inquiries only. We respond within 24 hours.</p>
-    <form id="inquiry-form" action="https://formspree.io/f/meebgabq" method="POST">
-      <div class="form-group"><label>Organization Name</label><input type="text" name="organization" placeholder="Your Company / Fund" required/></div>
-      <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="John Smith" required/></div>
-      <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="john@company.com" required/></div>
-      <div class="form-group">
-        <label>Inquiry Type</label>
-        <select name="inquiry_type" required>
-          <option value="">Select type</option>
-          <option value="Startup Acquisition">Startup Acquisition</option>
-          <option value="Institutional Investment">Institutional Investment</option>
-          <option value="Fund / VC">Fund / VC</option>
-          <option value="Strategic Corporate">Strategic Corporate</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Proposed Budget (USD)</label><input type="text" name="budget" placeholder="e.g. $200,000 - $500,000" /></div>
-      <div class="form-group"><label>Intended Use (optional)</label><textarea name="intended_use" placeholder="e.g. AI-powered fintech platform, digital payments, investment fund..."></textarea></div>
-      <input type="hidden" name="_subject" value="New Inquiry for RupeeAi.in"/>
-      <input type="hidden" name="_next" value="https://rupeeai.in"/>
-      <input type="hidden" name="_captcha" value="false"/>
-      <button type="submit" class="btn-submit">Submit Inquiry</button>
-    </form>
-    <div class="form-success" id="form-success">✅ Inquiry received! We will reply within 24 hours.</div>
+  <div class="form-box" style="text-align:center; padding: 32px 20px;">
+    <h2 style="color:var(--gold); margin-bottom: 8px;">Institutional Inquiry</h2>
+    <p style="color:var(--muted); font-size:14px; margin-bottom: 20px; line-height:1.6;">
+      For startups, funds, and institutional buyers. Serious inquiries only.
+    </p>
+    <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(240,193,5,0.08); border:1px solid var(--gold); border-radius:50px; padding:12px 24px;">
+      <span style="font-size:18px;">📧</span>
+      <a href="mailto:beherark1964@gmail.com" style="color:var(--gold); font-size:16px; font-weight:600; text-decoration:none; font-family:var(--font-syne); letter-spacing:0.5px;">
+        beherark1964@gmail.com
+      </a>
+    </div>
+    <p style="color:var(--muted); font-size:11px; margin-top:16px;">We respond to all inquiries within 24 hours.</p>
   </div>
 </div>
 
@@ -584,63 +556,6 @@ async function detectGeo() {
   }
 }
 detectGeo();
-
-// ─── FORM SUBMIT — FIXED WITH YOUR ENDPOINT ───
-document.getElementById('inquiry-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const btn = this.querySelector('.btn-submit');
-  const originalText = btn.textContent;
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  
-  try {
-    const formData = new FormData(this);
-    const res = await fetch(this.action, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-    
-    if (res.ok) {
-      // Success
-      this.style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
-    } else {
-      // Try to get error message from response
-      let errorMsg = 'Something went wrong. Please try again.';
-      try {
-        const data = await res.json();
-        if (data.error) errorMsg = data.error;
-      } catch(e) {}
-      btn.textContent = 'Try Again';
-      btn.disabled = false;
-      // Show a temporary error message
-      const errorEl = document.createElement('p');
-      errorEl.style.color = '#F43E5C';
-      errorEl.style.fontSize = '12px';
-      errorEl.style.marginTop = '8px';
-      errorEl.textContent = '⚠️ ' + errorMsg;
-      const existingError = this.querySelector('.form-error');
-      if (existingError) existingError.remove();
-      this.appendChild(errorEl);
-      setTimeout(() => { if (errorEl.parentNode) errorEl.remove(); }, 5000);
-    }
-  } catch(e) {
-    btn.textContent = 'Try Again';
-    btn.disabled = false;
-    const errorEl = document.createElement('p');
-    errorEl.style.color = '#F43E5C';
-    errorEl.style.fontSize = '12px';
-    errorEl.style.marginTop = '8px';
-    errorEl.textContent = '⚠️ Network error. Please check your connection.';
-    const existingError = this.querySelector('.form-error');
-    if (existingError) existingError.remove();
-    this.appendChild(errorEl);
-    setTimeout(() => { if (errorEl.parentNode) errorEl.remove(); }, 5000);
-  }
-});
 </script>
 </body>
 </html>
